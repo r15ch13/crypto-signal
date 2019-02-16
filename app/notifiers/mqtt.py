@@ -19,7 +19,7 @@ class MqttNotifier:
         self.client.connect(self._host, self._port)
 
     def notify(self, exchange, key, time_span, message):
-        topic = '/%s/%s/%s/' % exchange, key, time_span
+        topic = '/%s/%s/%s/' % (exchange, key, time_span)
         self.client.publish(topic, json.dumps(message), retain=True)
 
     def disconnect(self):
