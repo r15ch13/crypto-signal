@@ -38,6 +38,7 @@ from notifiers.mqtt import MqttNotifier
 
 from analyzers.utils import IndicatorUtils
 
+
 class Notifier(IndicatorUtils):
     """Handles sending notifications via the configured notifiers
     """
@@ -96,6 +97,7 @@ class Notifier(IndicatorUtils):
             enabled_notifiers.append('gmail')
 
         self.mqtt_configured = self._validate_required_config('mqtt', notifier_config)
+        print(self.mqtt_configured)
         if self.gmail_configured:
             self.mqtt_client = MqttNotifier(
                 host=notifier_config['mqtt']['required']['host'],

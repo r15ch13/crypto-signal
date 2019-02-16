@@ -6,6 +6,7 @@ import os
 import ccxt
 import yaml
 
+
 class Configuration():
     """Parses the environment configuration to create the config objects.
     """
@@ -30,7 +31,6 @@ class Configuration():
 
         if 'notifiers' in user_config:
             self.notifiers = {**default_config['notifiers'], **user_config['notifiers']}
-            print(self.notifiers)
         else:
             self.notifiers = default_config['notifiers']
 
