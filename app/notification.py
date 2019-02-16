@@ -213,8 +213,7 @@ class Notifier(IndicatorUtils):
         """
 
         if self.gmail_configured:
-            if message.strip():
-                self.gmail_client.notify(json.dumps(message))
+            self.gmail_client.notify(json.dumps(message))
 
 
     def notify_telegram(self, messages):
