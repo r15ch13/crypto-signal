@@ -11,6 +11,9 @@ import pandas as pd
 import numpy as np
 
 import matplotlib
+
+from app.notifiers.mqtt import MqttNotifier
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -33,6 +36,7 @@ from notifiers.gmail_client import GmailNotifier
 from notifiers.telegram_client import TelegramNotifier
 from notifiers.webhook_client import WebhookNotifier
 from notifiers.stdout_client import StdoutNotifier
+from notifiers.mqtt import MqttNotifier
 
 from analyzers.utils import IndicatorUtils
 
@@ -93,6 +97,16 @@ class Notifier(IndicatorUtils):
             )
             enabled_notifiers.append('gmail')
 
+        self.mqtt_configured = self._validate_required_config('mqtt', notifier_config)
+        if self.gmail_configured:
+            self.mqtt_client = MqttNotifier(
+                host=notifier_config['mqtt']['required']['host'],
+                port=notifier_config['mqtt']['required']['port'],
+                username=notifier_config['mqtt']['optional'].get('username'),
+                password=notifier_config['mqtt']['optional'].get('password')
+            )
+            enabled_notifiers.append('gmail')
+
         self.telegram_configured = self._validate_required_config('telegram', notifier_config)
         if self.telegram_configured:
             self.telegram_client = TelegramNotifier(
@@ -118,7 +132,6 @@ class Notifier(IndicatorUtils):
 
         self.logger.info('enabled notifers: %s', enabled_notifiers)
 
-
     def notify_all(self, new_analysis):
         """Trigger a notification for all notification options.
 
@@ -130,7 +143,7 @@ class Notifier(IndicatorUtils):
 
         messages = self.get_indicator_messages(new_analysis)
 
-        if self.enable_charts == True:
+        if self.enable_charts:
             if not os.path.exists(charts_dir):
                 os.mkdir(charts_dir)
 
@@ -172,7 +185,6 @@ class Notifier(IndicatorUtils):
             
             self.discord_client.notify(formatted_message.strip())
 
-
     def notify_slack(self, new_analysis):
         """Send a notification via the slack notifier
 
@@ -187,7 +199,6 @@ class Notifier(IndicatorUtils):
             )
             if message.strip():
                 self.slack_client.notify(message)
-
 
     def notify_twilio(self, new_analysis):
         """Send a notification via the twilio notifier
@@ -204,7 +215,6 @@ class Notifier(IndicatorUtils):
             if message.strip():
                 self.twilio_client.notify(message)
 
-
     def notify_gmail(self, message):
         """Send a notification via the gmail notifier
 
@@ -213,8 +223,25 @@ class Notifier(IndicatorUtils):
         """
 
         if self.gmail_configured:
-            self.gmail_client.notify(json.dumps(message))
+            data = {
 
+            }
+            self.gmail_client.notify(json.dumps(data))
+
+    def notify_mqtt(self, data):
+        """Send a notification via the gmail notifier
+
+        Args:
+            data (dict): The messages to send.
+        """
+
+        if self.mqtt_configured:
+            self.mqtt_client.connect()
+            for exchange, messages in data:
+                for key, message in messages:
+                    for time_span, data in message:
+                        self.mqtt_client.notify(exchange, key, time_span, data)
+            self.mqtt_client.disconnect()
 
     def notify_telegram(self, messages):
         """Send notifications via the telegram notifier
