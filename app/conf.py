@@ -30,6 +30,7 @@ class Configuration():
 
         if 'notifiers' in user_config:
             self.notifiers = {**default_config['notifiers'], **user_config['notifiers']}
+            print(self.notifiers)
         else:
             self.notifiers = default_config['notifiers']
 
