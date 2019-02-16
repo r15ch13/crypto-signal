@@ -145,7 +145,7 @@ informants:
       alert_enabled: true
       signal:
         - lrsi
-      candle_period: 4h
+      candle_period: 6h
     - enabled: true
       alert_enabled: true
       signal:
