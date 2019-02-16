@@ -233,9 +233,9 @@ class Notifier(IndicatorUtils):
         Args:
             data (dict): The messages to send.
         """
+        print('HELLO')
 
         if self.mqtt_configured:
-            print('HELLO')
             self.mqtt_client.connect()
             for exchange, messages in data:
                 for key, message in messages:
