@@ -104,7 +104,7 @@ class Notifier(IndicatorUtils):
                 username=notifier_config['mqtt']['optional'].get('username'),
                 password=notifier_config['mqtt']['optional'].get('password')
             )
-            enabled_notifiers.append('gmail')
+            enabled_notifiers.append('mqtt')
 
         self.telegram_configured = self._validate_required_config('telegram', notifier_config)
         if self.telegram_configured:
