@@ -97,8 +97,7 @@ class Notifier(IndicatorUtils):
             enabled_notifiers.append('gmail')
 
         self.mqtt_configured = self._validate_required_config('mqtt', notifier_config)
-        print(self.mqtt_configured)
-        if self.gmail_configured:
+        if self.mqtt_configured:
             self.mqtt_client = MqttNotifier(
                 host=notifier_config['mqtt']['required']['host'],
                 port=notifier_config['mqtt']['required']['port'],
