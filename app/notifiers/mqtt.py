@@ -2,10 +2,8 @@ import json
 
 import paho.mqtt.client as paho
 
-from app.notifiers.utils import NotifierUtils
 
-
-class MqttNotifier(NotifierUtils):
+class MqttNotifier:
 
     def __init__(self, **kwargs):
         self._host = kwargs['host']
