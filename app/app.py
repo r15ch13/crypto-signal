@@ -16,6 +16,7 @@ from exchange import ExchangeInterface
 from notification import Notifier
 from behaviour import Behaviour
 
+
 def main():
     """Initializes the application
     """
@@ -65,16 +66,19 @@ def main():
     for worker in thread_list:
         worker.join()
 
+
 def split_market_data(market_data):
     if len(market_data.keys()) > 20:
         return list(chunks(list(market_data.keys()), 20))
     else:
         return [list(market_data.keys())]
 
+
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
     for i in range(0, len(l), n):
         yield l[i:i + n]
+
 
 class AnalysisWorker(Thread):
 
