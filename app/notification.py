@@ -139,7 +139,7 @@ class Notifier(IndicatorUtils):
         self.notify_slack(new_analysis)
         self.notify_discord(messages)
         self.notify_twilio(new_analysis)
-        self.notify_gmail(new_analysis)
+        self.notify_gmail(messages)
         self.notify_telegram(messages)
         self.notify_webhook(messages)
         self.notify_stdout(new_analysis)
@@ -205,7 +205,7 @@ class Notifier(IndicatorUtils):
                 self.twilio_client.notify(message)
 
 
-    def notify_gmail(self, new_analysis):
+    def notify_gmail(self, message):
         """Send a notification via the gmail notifier
 
         Args:
@@ -213,12 +213,8 @@ class Notifier(IndicatorUtils):
         """
 
         if self.gmail_configured:
-            message = self._indicator_message_templater(
-                new_analysis,
-                self.notifier_config['gmail']['optional']['template']
-            )
             if message.strip():
-                self.gmail_client.notify(message)
+                self.gmail_client.notify(json.dumps(message))
 
 
     def notify_telegram(self, messages):
@@ -321,7 +317,6 @@ class Notifier(IndicatorUtils):
             if not val:
                 notifier_configured = False
         return notifier_configured
-
 
     def _indicator_message_templater(self, new_analysis, template):
         """Creates a message from a user defined template
