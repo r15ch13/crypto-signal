@@ -152,6 +152,7 @@ class Notifier(IndicatorUtils):
         self.notify_discord(messages)
         self.notify_twilio(new_analysis)
         self.notify_gmail(messages)
+        self.notify_mqtt(messages)
         self.notify_telegram(messages)
         self.notify_webhook(messages)
         self.notify_stdout(new_analysis)
@@ -233,7 +234,6 @@ class Notifier(IndicatorUtils):
         Args:
             data (dict): The messages to send.
         """
-        print('HELLO')
 
         if self.mqtt_configured:
             self.mqtt_client.connect()
