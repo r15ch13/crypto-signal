@@ -239,6 +239,7 @@ class Notifier(IndicatorUtils):
             for exchange, messages in data:
                 for key, message in messages:
                     for time_span, data in message:
+                        print(data + '\n')
                         self.mqtt_client.notify(exchange, key, time_span, data)
             self.mqtt_client.disconnect()
 
