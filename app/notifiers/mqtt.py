@@ -23,12 +23,15 @@ class MqttNotifier:
         topic = '/%s/%s/%s/%s/' % (
             exchange, key, time_span, message['indicator'])
         data = {
-            'status': message['status'],
             'last_status': message['last_status']
         }
         for key in message['values']:
             data[key] = message['values'][key]
-        self.client.publish(topic, json.dumps(data), retain=True)
+        self.client.publish(
+            topic, json.dumps({'status': message['status']}), retain=True)
+
+        self.client.publish(
+            topic + 'attributes/', json.dumps(data), retain=True)
 
     def disconnect(self):
         self.client.loop_stop()
