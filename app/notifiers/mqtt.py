@@ -17,10 +17,12 @@ class MqttNotifier:
 
     def connect(self):
         self.client.connect(self._host, self._port)
+        self.client.loop_start()
 
     def notify(self, exchange, key, time_span, message):
         topic = '/%s/%s/%s/' % (exchange, key, time_span)
         self.client.publish(topic, json.dumps(message), retain=True)
 
     def disconnect(self):
+        self.client.loop_stop()
         self.client.disconnect()
