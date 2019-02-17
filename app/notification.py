@@ -240,7 +240,9 @@ class Notifier(IndicatorUtils):
             for exchange in data.keys():
                 for key in data[exchange]:
                     for time_span in data[exchange][key]:
-                        self.mqtt_client.notify(exchange, key, time_span, data)
+                        self.mqtt_client.notify(
+                            exchange, key,
+                            time_span, data[exchange][key][time_span])
             self.mqtt_client.disconnect()
 
     def notify_telegram(self, messages):
