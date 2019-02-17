@@ -28,7 +28,7 @@ class MqttNotifier:
         }
         for key in message['values']:
             data[key] = message['values'][key]
-        self.client.publish(topic, json.dumps(message), retain=True)
+        self.client.publish(topic, json.dumps(data), retain=True)
 
     def disconnect(self):
         self.client.loop_stop()
