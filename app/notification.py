@@ -239,8 +239,8 @@ class Notifier(IndicatorUtils):
             self.mqtt_client.connect()
             for exchange in data.keys():
                 for key in data[exchange]:
+                    print(data[exchange])
                     for time_span in data[exchange][key]:
-                        print(data[exchange][time_span])
                         if len(data[exchange][key][time_span]) > 0:
                             self.mqtt_client.notify(
                                 exchange, key,
