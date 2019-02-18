@@ -572,7 +572,7 @@ class Notifier(IndicatorUtils):
                             # Save status of indicator's new analysis
                             new_analysis[exchange][market_pair][indicator_type][indicator][index]['status'] = status
 
-                            if latest_result['is_hot'] or latest_result['is_cold']:
+                            if latest_result['is_hot'] or latest_result['is_cold'] or analysis['config']['alert_frequency'] == 'always':
 
                                 #Custom 'hot' / 'cold' labels
                                 hot_cold_label = ''
