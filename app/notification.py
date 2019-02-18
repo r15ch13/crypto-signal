@@ -668,8 +668,11 @@ class Notifier(IndicatorUtils):
                 _messages = messages[exchange][market_pair]
                                     
                 for candle_period in _messages:
-                    candles_data = self.all_historical_data[exchange][market_pair][candle_period]
-                    self.create_chart(exchange, market_pair, candle_period, candles_data)
+                    try:
+                        candles_data = self.all_historical_data[exchange][market_pair][candle_period]
+                        self.create_chart(exchange, market_pair, candle_period, candles_data)
+                    except KeyError:
+                        continue
 
     def create_chart(self, exchange, market_pair, candle_period, candles_data):
         now = datetime.now(timezone(self.timezone))
