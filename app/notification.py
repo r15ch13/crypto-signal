@@ -241,9 +241,12 @@ class Notifier(IndicatorUtils):
                 for key in data[exchange]:
                     for time_span in data[exchange][key]:
                         if len(data[exchange][key][time_span]) > 0:
+                            print(data[exchange][key][time_span]['indicator'])
                             self.mqtt_client.notify(
                                 exchange, key,
                                 time_span, data[exchange][key][time_span][0])
+                        else:
+                            print(data[exchange][key][time_span])
             self.mqtt_client.disconnect()
 
     def notify_telegram(self, messages):
@@ -633,13 +636,12 @@ class Notifier(IndicatorUtils):
                                         analysis=analysis, status=status, last_status=last_status, 
                                         prices=prices, lrsi=lrsi, creation_date=creation_date, hot_cold_label=hot_cold_label,
                                         indicator_label=indicator_label)
-                                    print(indicator)
                                     new_messages[exchange][market_pair][candle_period].append(new_message)
 
         # Merge changes from new analysis into last analysis
         self.last_analysis = {**self.last_analysis, **new_analysis}
 
-        if self.first_run == True:
+        if self.first_run:
             self.first_run = False
 
         return new_messages
