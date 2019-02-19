@@ -141,6 +141,7 @@ class Notifier(IndicatorUtils):
         charts_dir = './charts'
 
         messages = self.get_indicator_messages(new_analysis)
+        print(messages)
 
         if self.enable_charts:
             if not os.path.exists(charts_dir):
@@ -240,13 +241,9 @@ class Notifier(IndicatorUtils):
             for exchange in data.keys():
                 for key in data[exchange]:
                     for time_span in data[exchange][key]:
-                        if len(data[exchange][key][time_span]) > 0:
-                            print(data[exchange][key][time_span][0]['indicator'])
-                            self.mqtt_client.notify(
-                                exchange, key,
-                                time_span, data[exchange][key][time_span][0])
-                        else:
-                            print(data[exchange][key][time_span])
+                        self.mqtt_client.notify(
+                            exchange, key,
+                            time_span, data[exchange][key][time_span][0])
             self.mqtt_client.disconnect()
 
     def notify_telegram(self, messages):
