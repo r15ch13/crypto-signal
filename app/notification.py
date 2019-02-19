@@ -271,7 +271,6 @@ class Notifier(IndicatorUtils):
                     else:
                         self.notify_telegram_message(_messages[candle_period], message_template)
 
-
     def notify_telegram_chart(self, exchange, market_pair, candle_period, messages, message_template):
         market_pair = market_pair.replace('/', '_').lower()
         chart_file = '{}/{}_{}_{}.png'.format('./charts', exchange, market_pair, candle_period)
@@ -470,7 +469,7 @@ class Notifier(IndicatorUtils):
             list: A list with the plain message data for the notifier.
         """
 
-        if not self.last_analysis: #is the first run
+        if not self.last_analysis:  # is the first run
             self.last_analysis = new_analysis
             self.first_run = True
 
@@ -519,8 +518,6 @@ class Notifier(IndicatorUtils):
 
                     for indicator in new_analysis[exchange][market_pair][indicator_type]:
                         for index, analysis in enumerate(new_analysis[exchange][market_pair][indicator_type][indicator]):
-                            if analysis['result'].shape[0] == 0:
-                                continue
 
                             values = dict()
                             if 'candle_period' in analysis['config']:
