@@ -632,7 +632,7 @@ class Notifier(IndicatorUtils):
                                         quote_currency=quote_currency, indicator=indicator, indicator_number=index,
                                         analysis=analysis, status=status, last_status=last_status, 
                                         prices=prices, lrsi=lrsi, creation_date=creation_date, hot_cold_label=hot_cold_label,
-                                        indicator_label=indicator_label)                                    
+                                        indicator_label=indicator)
                                     print(indicator_label)
                                     new_messages[exchange][market_pair][candle_period].append(new_message)
 
