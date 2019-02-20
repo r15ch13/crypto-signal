@@ -19,9 +19,9 @@ class MqttNotifier:
         self.client.connect(self._host, self._port)
         self.client.loop_start()
 
-    def notify(self, exchange, key, time_span, message):
+    def notify(self, exchange, key, time_span, indicator, message):
         topic = '/%s/%s/%s/%s/' % (
-            exchange, key, time_span, message['indicator'])
+            exchange, key, time_span, indicator)
         data = {
             'last_status': message['last_status']
         }
