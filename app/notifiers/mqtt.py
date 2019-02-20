@@ -20,13 +20,14 @@ class MqttNotifier:
         self.client.loop_start()
 
     def notify(self, exchange, key, time_span, message):
-        print(message['indicator'])
         topic = '/%s/%s/%s/%s/' % (
             exchange, key, time_span, message['indicator'])
         data = {
             'last_status': message['last_status']
         }
         for key in message['values']:
+            self.client.publish(
+                topic + '/%s/' % key, message['values'][key], retain=True)
             data[key] = message['values'][key]
         self.client.publish(
             topic, json.dumps({'status': message['status']}), retain=True)
