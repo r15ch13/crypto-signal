@@ -27,7 +27,7 @@ class MqttNotifier:
         }
         for key in message['values']:
             self.client.publish(
-                topic + '/%s/' % key, message['values'][key], retain=True)
+                topic + '%s/' % key, message['values'][key], retain=True)
             data[key] = message['values'][key]
         self.client.publish(
             topic, json.dumps({'status': message['status']}), retain=True)
