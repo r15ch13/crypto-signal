@@ -234,7 +234,6 @@ class Notifier(IndicatorUtils):
         Args:
             data (dict): The messages to send.
         """
-        print(json.dumps(data))
         if self.mqtt_configured:
             self.mqtt_client.connect()
             for exchange in data.keys():

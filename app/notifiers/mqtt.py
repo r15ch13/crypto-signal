@@ -1,4 +1,5 @@
 import json
+from time import sleep
 
 import paho.mqtt.client as paho
 
@@ -36,5 +37,7 @@ class MqttNotifier:
             topic + 'attributes/', json.dumps(data), retain=True)
 
     def disconnect(self):
+        while len(self.client._out_messages) != 0:
+            sleep(1)
         self.client.loop_stop()
         self.client.disconnect()
