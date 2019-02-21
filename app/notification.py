@@ -241,6 +241,7 @@ class Notifier(IndicatorUtils):
                 for key in data[exchange]:
                     for time_span in data[exchange][key]:
                         indicator = data[exchange][key][time_span][0]['indicator']
+                        print(key + indicator)
                         self.mqtt_client.notify(
                             exchange, key,
                             time_span, indicator, data[exchange][key][time_span][0])
