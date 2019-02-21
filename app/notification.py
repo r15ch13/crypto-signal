@@ -243,6 +243,7 @@ class Notifier(IndicatorUtils):
                         i = 0
                         for value in data[exchange][key][time_span]:
                             indicator = value['indicator'] if i == 0 else value['indicator'] + "_%s" % i
+                            print(indicator)
                             self.mqtt_client.notify(
                                 exchange, key,
                                 time_span, indicator, value)
