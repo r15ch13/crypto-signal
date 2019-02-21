@@ -38,6 +38,7 @@ class MqttNotifier:
 
     def disconnect(self):
         while len(self.client._out_messages) != 0:
+            print("sending")
             sleep(1)
         self.client.loop_stop()
         self.client.disconnect()
