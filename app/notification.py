@@ -234,17 +234,18 @@ class Notifier(IndicatorUtils):
         Args:
             data (dict): The messages to send.
         """
-
+        print(json.dumps(data))
         if self.mqtt_configured:
             self.mqtt_client.connect()
             for exchange in data.keys():
                 for key in data[exchange]:
                     for time_span in data[exchange][key]:
-                        indicator = data[exchange][key][time_span][0]['indicator']
-                        print(key + indicator)
-                        self.mqtt_client.notify(
-                            exchange, key,
-                            time_span, indicator, data[exchange][key][time_span][0])
+                        i = 0
+                        for value in data[exchange][key][time_span]:
+                            indicator = value['indicator'] if i == 0 else value['indicator'] + "_%s" % i
+                            self.mqtt_client.notify(
+                                exchange, key,
+                                time_span, indicator, value)
             self.mqtt_client.disconnect()
 
     def notify_telegram(self, messages):
