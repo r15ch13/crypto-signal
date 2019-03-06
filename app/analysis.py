@@ -9,6 +9,7 @@ import pandas
 from talib import abstract
 
 from analyzers.indicators import *
+from analyzers.indicators import sar
 from analyzers.informants import *
 from analyzers import *
 
