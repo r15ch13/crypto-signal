@@ -32,6 +32,7 @@ class StrategyAnalyzer():
             'ichimoku': ichimoku.Ichimoku().analyze,
             'macd': macd.MACD().analyze,
             'rsi': rsi.RSI().analyze,
+            'sar': sar.SAR().analyze,
             'momentum': momentum.Momentum().analyze,
             'mfi': mfi.MFI().analyze,
             'stoch_rsi': stoch_rsi.StochasticRSI().analyze,
